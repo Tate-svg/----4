@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>动态生成学生表格</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #d9534f;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>科目</th>
+                <th>成绩</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+    <script>
+        
+        var students = [
+            { id: "202301", name: "张三", gender: "男", subject: "数学", score: 95 },
+            { id: "202302", name: "李四", gender: "女", subject: "英语", score: 88 },
+            { id: "202303", name: "王五", gender: "男", subject: "语文", score: 92 }
+        ];
+
+        var tbody = document.getElementById("studentTable").getElementsByTagName("tbody")[0];
+
+        function renderTable() {
+            tbody.innerHTML = "";
+            students.forEach(function(student, index) {
+                var row = tbody.insertRow();
+                row.insertCell().innerText = student.id;
+                row.insertCell().innerText = student.name;
+                row.insertCell().innerText = student.gender;
+                row.insertCell().innerText = student.subject;
+                row.insertCell().innerText = student.score;
+                var actionCell = row.insertCell();
+                var delLink = document.createElement("a");
+                delLink.innerText = "删除";
+                delLink.onclick = function() {
+                    students.splice(index, 1);
+                    renderTable();
+                };
+                actionCell.appendChild(delLink);
+            });
+        }
+
+        renderTable();
+    </script>
+</body>
+</html>

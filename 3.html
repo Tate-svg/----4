@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>电子时钟</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 80px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f7f7f7;
+        }
+        #clock {
+            font-size: 3em;
+            color: #2196f3;
+            letter-spacing: 4px;
+            background: #fff;
+            display: inline-block;
+            padding: 20px 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px #bbb;
+            margin-bottom: 30px;
+        }
+        #toggleBtn {
+            font-size: 1.2em;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 8px;
+            background: #4caf50;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #toggleBtn.stopped {
+            background: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock">00:00:00</div><br>
+    <button id="toggleBtn">暂停</button>
+    <script>
+        var clock = document.getElementById('clock');
+        var btn = document.getElementById('toggleBtn');
+        var timer = null;
+        var running = true;
+
+        function updateClock() {
+            var now = new Date();
+            var h = String(now.getHours()).padStart(2, '0');
+            var m = String(now.getMinutes()).padStart(2, '0');
+            var s = String(now.getSeconds()).padStart(2, '0');
+            clock.innerText = h + ':' + m + ':' + s;
+        }
+
+        function startClock() {
+            if (!timer) {
+                timer = setInterval(updateClock, 1000);
+            }
+        }
+
+        function stopClock() {
+            clearInterval(timer);
+            timer = null;
+        }
+
+        btn.onclick = function() {
+            if (running) {
+                stopClock();
+                btn.innerText = "继续";
+                btn.classList.add("stopped");
+            } else {
+                startClock();
+                btn.innerText = "暂停";
+                btn.classList.remove("stopped");
+            }
+            running = !running;
+        };
+
+        updateClock();
+        startClock();
+    </script>
+</body>
+</html>
